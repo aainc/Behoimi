@@ -1,5 +1,5 @@
 {
-    "name": "t_ishida/behoimi",
+    "name": "aainc/behoimi",
     "description": "yet another oauth server library",
     "license": "MIT",
     "autoload": {
