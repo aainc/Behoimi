@@ -26,20 +26,12 @@ abstract class AccessTokenGenerator implements \Scruit\Runnable {
         $accessTokensDao = new AccessTokensDao($databaseSession);
         $application = $applicationsDao->find(isset($args['appId']) ? $args['appId'] : 1);
         if (!$application) {
-            $application = new \stdClass();
-            $application->name = 'test';
-            $application->client_id = 'test';
-            $application->client_secret = 'test';
-            $application->redirect_uri = 'https://test.test.test/code_at';
-            $application->withdraw_uri = 'https://test.test.test/withdraw_at';
+            $application = $this->createApplication();
             $applicationsDao->save($application);
         }
         $authorize = $authorizedApplicationDao->findByAppIdAndUserId($application->id, $args['userId']);
         if (!$authorize) {
-            $authorize = new \stdClass();
-            $authorize->user_id = $args['userId'];
-            $authorize->application_id = $application->id;
-            $authorize->running = 1;
+            $authorize = $this->createAuthorizedApplication($args['userId'], $application);
             $authorizedApplicationDao->save($authorize);
         }
 
@@ -53,12 +45,7 @@ abstract class AccessTokenGenerator implements \Scruit\Runnable {
             }
         }
 
-        $accessToken = (object)array(
-            'authorized_application_id' => $authorize->id,
-            'access_token' => bin2hex(openssl_random_pseudo_bytes(25)),
-            'refresh_token' => bin2hex(openssl_random_pseudo_bytes(25)),
-            'created_at' => time(),
-        );
+        $accessToken = $this->createAccessToken($authorize);
         $accessTokensDao->save($accessToken);
         print "access_token:  $accessToken->access_token\n";
         print "refresh_token: $accessToken->refresh_token\n";
@@ -70,9 +57,48 @@ abstract class AccessTokenGenerator implements \Scruit\Runnable {
 
     abstract public function getScopes();
 
+
+    public function createAuthorizedApplication($userId, $application)
+    {
+        $authorize = new \stdClass();
+        $authorize->user_id = $userId;
+        $authorize->application_id = $application->id;
+        $authorize->running = 1;
+        return $authorize;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function createApplication()
+    {
+        $application = new \stdClass();
+        $application->name = 'test';
+        $application->client_id = 'test';
+        $application->client_secret = 'test';
+        $application->redirect_uri = 'https://test.test.test/code_at';
+        $application->withdraw_uri = 'https://test.test.test/withdraw_at';
+        return $application;
+    }
+
+    /**
+     * @param $authorize
+     * @return object
+     */
+    public function createAccessToken($authorize)
+    {
+        $accessToken = (object)array(
+            'authorized_application_id' => $authorize->id,
+            'access_token' => bin2hex(openssl_random_pseudo_bytes(25)),
+            'refresh_token' => bin2hex(openssl_random_pseudo_bytes(25)),
+            'created_at' => time(),
+        );
+        return $accessToken;
+    }
+
     public function doc()
     {?>
-generate accessToken
-<?php
+        generate accessToken
+    <?php
     }
 }

@@ -3,7 +3,9 @@ namespace Behoimi\Action;
 
 
 use Behoimi\OAuth\AccessToken;
+use Behoimi\OAuth\SampleScopeDefinition;
 use Behoimi\OAuth\Scopes;
+use Behoimi\OAuth\SampleScopes;
 use Hoimi\Request;
 use Zaolik\DIContainer;
 
@@ -60,14 +62,14 @@ class BaseOAuthActionTest extends \PHPUnit_Framework_TestCase
         $this->accessToken = new AccessToken();
         $this->accessToken->setAuthorizedApplicationId(999);
         $this->accessToken->setUserId(1234);
-        $this->accessToken->setScopes(new Scopes(array(Scopes::R_PROFILE)));
+        $this->accessToken->setScopes(new Scopes(array(SampleScopeDefinition::R_PROFILE)));
         $this->accessToken->setCreatedAt(time());
     }
 
     public function testGetScopeGET()
     {
         $this->get->setRequest($this->getRequest);
-        $this->assertSame(Scopes::R_PROFILE, $this->get->getScope());
+        $this->assertSame(SampleScopeDefinition::R_PROFILE, $this->get->getScope());
         $this->get->setRequest($this->postRequest);
         $this->assertSame(null, $this->get->getScope());
         $this->get->setRequest($this->deleteRequest);
@@ -81,7 +83,7 @@ class BaseOAuthActionTest extends \PHPUnit_Framework_TestCase
         $this->post->setRequest($this->getRequest);
         $this->assertSame(null, $this->post->getScope());
         $this->post->setRequest($this->postRequest);
-        $this->assertSame(Scopes::W_PROFILE, $this->post->getScope());
+        $this->assertSame(SampleScopeDefinition::W_PROFILE, $this->post->getScope());
         $this->post->setRequest($this->deleteRequest);
         $this->assertSame(null, $this->post->getScope());
         $this->post->setRequest($this->putRequest);
@@ -97,7 +99,7 @@ class BaseOAuthActionTest extends \PHPUnit_Framework_TestCase
         $this->put->setRequest($this->deleteRequest);
         $this->assertSame(null, $this->put->getScope());
         $this->put->setRequest($this->putRequest);
-        $this->assertSame(Scopes::W_PROFILE, $this->put->getScope());
+        $this->assertSame(SampleScopeDefinition::W_PROFILE, $this->put->getScope());
     }
 
     public function testDeleteScopeGET()
@@ -107,7 +109,7 @@ class BaseOAuthActionTest extends \PHPUnit_Framework_TestCase
         $this->delete->setRequest($this->postRequest);
         $this->assertSame(null, $this->delete->getScope());
         $this->delete->setRequest($this->deleteRequest);
-        $this->assertSame(Scopes::W_PROFILE, $this->delete->getScope());
+        $this->assertSame(SampleScopeDefinition::W_PROFILE, $this->delete->getScope());
         $this->delete->setRequest($this->putRequest);
         $this->assertSame(null, $this->delete->getScope());
     }
@@ -160,7 +162,7 @@ class DummyOAuthActionGET extends BaseOAuthAction
 {
     public function getGETScope ()
     {
-        return Scopes::R_PROFILE;
+        return SampleScopeDefinition::R_PROFILE;
     }
 
 }
@@ -168,20 +170,20 @@ class DummyOAuthActionPOST extends BaseOAuthAction
 {
     public function getPOSTScope ()
     {
-        return Scopes::W_PROFILE;
+        return SampleScopeDefinition::W_PROFILE;
     }
 }
 class DummyOAuthActionDELETE extends BaseOAuthAction
 {
     public function getDELETEScope ()
     {
-        return Scopes::W_PROFILE;
+        return SampleScopeDefinition::W_PROFILE;
     }
 }
 class DummyOAuthActionPUT extends BaseOAuthAction
 {
     public function getPUTScope ()
     {
-        return Scopes::W_PROFILE;
+        return SampleScopeDefinition::W_PROFILE;
     }
 }
