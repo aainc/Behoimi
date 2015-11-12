@@ -1,5 +1,5 @@
 <?php
-namespace Behoimi\commands;
+namespace Behoimi\Command;
 
 
 use Hoimi\ArrayContainer;

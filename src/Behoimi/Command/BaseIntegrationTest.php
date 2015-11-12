@@ -4,7 +4,7 @@
  * Time: 11:23
  */
 
-namespace Behoimi\commands;
+namespace Behoimi\Command;
 
 
 use Scruit\Runnable;

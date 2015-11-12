@@ -4,7 +4,7 @@
  * Time: 19:25
  */
 
-namespace Behoimi\commands;
+namespace Behoimi\Command;
 
 
 use Loula\AccessTokenListener;
