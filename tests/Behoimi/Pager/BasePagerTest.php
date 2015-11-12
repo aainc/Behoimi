@@ -12,7 +12,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
     private $target = null;
     public function setUp ()
     {
-        $this->target = new DummyPager(new ArrayContainer(array(
+        $this->target = new DummyPagerForBasePager(new ArrayContainer(array(
             'order' => 'col1Key',
             'direction' => 'DESC',
             'limit' => 10,
@@ -27,7 +27,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildSQLDefault ()
     {
-        $this->assertSame('ORDER BY col5Name ASC LIMIT 51 OFFSET 0', (new DummyPager(new ArrayContainer(array())))->buildSQL());
+        $this->assertSame('ORDER BY col5Name ASC LIMIT 51 OFFSET 0', (new DummyPagerForBasePager(new ArrayContainer(array())))->buildSQL());
     }
 
     /**
@@ -35,7 +35,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidOrderKey ()
     {
-        new DummyPager(new ArrayContainer(array('order' => 'col6Key')));
+        new DummyPagerForBasePager(new ArrayContainer(array('order' => 'col6Key')));
     }
 
     /**
@@ -43,7 +43,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidDirection ()
     {
-        new DummyPager(new ArrayContainer(array('direction' => 'hoge')));
+        new DummyPagerForBasePager(new ArrayContainer(array('direction' => 'hoge')));
     }
 
     /**
@@ -51,7 +51,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidPage ()
     {
-        new DummyPager(new ArrayContainer(array('page' => 0)));
+        new DummyPagerForBasePager(new ArrayContainer(array('page' => 0)));
     }
 
     /**
@@ -59,7 +59,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidPageString ()
     {
-        new DummyPager(new ArrayContainer(array('page' => 'hoge')));
+        new DummyPagerForBasePager(new ArrayContainer(array('page' => 'hoge')));
     }
 
     /**
@@ -67,7 +67,7 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidLimit ()
     {
-        new DummyPager(new ArrayContainer(array('limit' => -1)));
+        new DummyPagerForBasePager(new ArrayContainer(array('limit' => -1)));
     }
 
     /**
@@ -75,11 +75,11 @@ class BasePagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidLimitString ()
     {
-        new DummyPager(new ArrayContainer(array('limit' => 'hoge')));
+        new DummyPagerForBasePager(new ArrayContainer(array('limit' => 'hoge')));
     }
 }
 
-class DummyPager extends BasePager
+class DummyPagerForBasePager extends BasePager
 {
 
     public function getColumns()

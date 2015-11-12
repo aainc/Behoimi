@@ -3,7 +3,7 @@
  * Date: 15/10/13
  * Time: 16:25.
  */
-namespace Behoimi\Dao;
+namespace Behoimi\Pager;
 
 use Mahotora\BaseDao;
 use Behoimi\Pager\BasePager;
