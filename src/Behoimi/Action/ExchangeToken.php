@@ -34,7 +34,7 @@ class ExchangeToken extends ApiBaseAction
         );
         $this->getDatabaseSession()->executeNoResult(
             'INSERT INTO access_tokens (authorized_application_id, access_token, refresh_token, created_at) VALUES (?, ?, ?, UNIX_TIMESTAMP())',
-            'issi',
+            'iss',
             array(
                 $code[0]->authorized_application_id,
                 $accessToken->access_token,

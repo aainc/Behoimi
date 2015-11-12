@@ -80,7 +80,7 @@ class ExchangeTokenTest extends \PHPUnit_Framework_TestCase
         );
         \Phake::verify($this->databaseSession)->executeNoResult(
             "INSERT INTO access_tokens (authorized_application_id, access_token, refresh_token, created_at) VALUES (?, ?, ?, UNIX_TIMESTAMP())",
-            'issi',
+            'iss',
             $this->anything()
         );
         \Phake::verify($this->databaseSession)->executeNoResult(
