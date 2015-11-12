@@ -1,5 +1,5 @@
 <?php
-namespace BeHoimi\Action;
+namespace Behoimi\Action;
 
 use Behoimi\OAuth\AccessToken;
 use Behoimi\OAuth\InvalidRefreshTokenException;
