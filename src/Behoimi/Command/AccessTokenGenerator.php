@@ -1,5 +1,5 @@
 <?php
-namespace ReFUEL4\commands;
+namespace Behoimi\commands;
 
 
 use Behoimi\Dao\AccessTokensDao;

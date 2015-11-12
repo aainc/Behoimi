@@ -4,7 +4,7 @@
  * Time: 11:23
  */
 
-namespace ReFUEL4\commands;
+namespace Behoimi\commands;
 
 
 use Scruit\Runnable;
