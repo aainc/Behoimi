@@ -3,7 +3,7 @@
  * Date: 15/10/01
  * Time: 20:48.
  */
-namespace Behoimi\response;
+namespace Behoimi\Response;
 
 use Hoimi\Response\Json;
 
