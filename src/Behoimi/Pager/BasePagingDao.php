@@ -11,28 +11,28 @@ use Behoimi\Pager\PagingResult;
 
 abstract class BasePagingDao extends BaseDao
 {
-    protected function findPage($query, $marker, $params, BasePager $Pager)
+    protected function findPage($query, $marker, $params, BasePager $pager)
     {
-        return $this->traversePage($query, $marker, $params, $Pager);
+        return $this->traversePage($query, $marker, $params, $pager);
     }
 
-    protected function traversePage($query, $marker, $params, BasePager $Pager, \Closure $callable = null)
+    protected function traversePage($query, $marker, $params, BasePager $pager, \Closure $callable = null)
     {
         $list = $this->getDatabaseSession()->traverse(
-            $query.' '.$Pager->buildSQL(),
+            $query.' '.$pager->buildSQL(),
             $callable,
             $marker,
             $params
         );
         $nextPage = null;
-        $prevPage = $Pager->getPage() <= 1 ? null : $Pager->getPage() - 1;
-        if (count($list) > $Pager->getLimit()) {
+        $prevPage = $pager->getPage() <= 1 ? null : $pager->getPage() - 1;
+        if (count($list) > $pager->getLimit()) {
             array_pop($list);
-            $nextPage = $Pager->getPage() + 1;
+            $nextPage = $pager->getPage() + 1;
         }
 
         return $list ?
-            new PagingResult($list, $prevPage, $nextPage, $Pager->getLimit(), $Pager->getOrder(), $Pager->getDirection()) :
+            new PagingResult($list, $prevPage, $nextPage, $pager->getLimit(), $pager->getOrder(), $pager->getDirection()) :
             null;
     }
 }
